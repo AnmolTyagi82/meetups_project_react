@@ -10,7 +10,7 @@ function AllMeetupsPage() {
   useEffect(() => {
     setIsLoading(true);
     fetch(
-      'https://meetupreact-c5408-default-rtdb.firebaseio.com/meetups.json'
+      `https://meetupreact-c5408-default-rtdb.firebaseio.com/meetups.json`
     ).then(response => {
       return response.json()
     }).then(data => {
@@ -28,6 +28,19 @@ function AllMeetupsPage() {
     });
   }, []);
 
+  const deleteMeetupHandler = async (meetupId) => {
+    setIsLoading(true);
+    try {
+      await fetch(`https://meetupreact-c5408-default-rtdb.firebaseio.com/meetups/${meetupId}.json`, {
+        method: "DELETE",
+      });
+      setLoadedMeetups(prevMeetups => prevMeetups.filter(meetup => meetup.id !== meetupId));
+    } catch (error) {
+      console.log("Error deleting meetup:", error);
+    }
+    setIsLoading(false);
+  }
+
   if (isLoading) {
     return (
       <section>
@@ -39,7 +52,11 @@ function AllMeetupsPage() {
   return (
     <section>
       <h1>All Meetups</h1>
-      <MeetUpList meetups={loadedMeetups} />
+      <MeetUpList 
+        meetups={loadedMeetups} 
+        onDeleteMeetup={deleteMeetupHandler}
+        showDeleteButton={true}
+      />
     </section>
   )
 }

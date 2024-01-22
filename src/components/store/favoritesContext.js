@@ -33,6 +33,7 @@ export function FavoritesContextProvider(props) {
         addFavorite: addFavoriteHandler,
         removeFavorite: removeFavoriteHandler,
         itemIsFavorite: itemIsFavoriteHandler,
+        userFavorites: userFavorites
     };
 
     return (

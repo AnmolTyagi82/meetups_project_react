@@ -14,13 +14,29 @@ function MeetUpItem(props) {
         if (itemIsFavorite) {
             favoriteCtx.removeFavorite(props.id);
         } else {
-            favoriteCtx.addFavorite({
-                id: props.id,
-                title: props.title,
-                description: props.description,
-                image: props.image,
-                address: props.address,
-            });
+            let newFav = {
+                "id": props.id,
+                "title": props.title,
+                "description": props.description,
+                "image": props.image,
+                "address": props.address
+            }
+            favoriteCtx.addFavorite(newFav);
+
+            // try {
+            //     const response = fetch(`https://meetupreact-c5408-default-rtdb.firebaseio.com/favorites.json`, {
+            //         method: "POST",
+            //         headers: {
+            //             "Content-Type": "application/json",
+            //         },
+            //         body: JSON.stringify(newFav),
+            //     });
+            //     if (!response.ok) {
+            //         throw new Error("Failed to add to favorites");
+            //     }
+            // } catch (error) {
+            //     console.log("Error saving to the database:", error);
+            // }
         }
     }
 
@@ -41,6 +57,9 @@ function MeetUpItem(props) {
                 >
                     {itemIsFavorite ? "Remove from Favorites" : "To Favorites"}
                 </button>
+                {props.showDelete && (
+                    <button onClick={() => props.onDelete(props.id)}>Delete Meetup</button>
+                )}
             </div>
         </Card>
     </li>

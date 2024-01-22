@@ -13,6 +13,8 @@ function MeetUpList(props) {
                 title={meetup.title}
                 address={meetup.address}
                 description={meetup.description}
+                onDelete={props.onDeleteMeetup}
+                showDelete={props.showDeleteButton}
             />
         ))}
     </ul>
